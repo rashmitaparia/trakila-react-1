@@ -123,7 +123,7 @@ export class Row extends React.Component {
 
          <Grid container spacing={24}>
           {this.props.products.map(product => (
-            <Grid item xs={6} sm={3}>
+            <Grid item xs={6} sm={3} key={product.prodid}>
                <Card className={this.props.classes.card} key={product.prodid}>
                  <CardMedia
                   className={this.props.classes.media}
@@ -146,6 +146,14 @@ export class Row extends React.Component {
                  
                 </Grid>
              </CardContent>
+
+             <CardActions className={this.props.classes.bordertop}>
+                  <Grid item xs={9} ></Grid>
+                  <Grid item xs={2} className={this.props.classes.borderleft}><a color="accent" href={product.url} target="_blank">
+                    <Icon >add_shoppin_cart</Icon>
+                  </a>
+                   </Grid>
+                </CardActions>
               </Card>
               </Grid>
            ))}

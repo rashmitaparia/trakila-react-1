@@ -31,7 +31,7 @@ const styles = {
 };
 
 var page = 1;
-var products = [];
+var allproducts = [];
 
 class Index extends Component {
   state = {
@@ -41,7 +41,7 @@ class Index extends Component {
   componentDidMount() {
         console.log("this.props",this.props);
         this.props.fetchTrakilaProducts(page);
-        products.push(this.props.offerdata)
+        allproducts =   allproducts.concat(this.props.offerdata)
       }
 
   handleRequestClose = () => {
@@ -51,10 +51,10 @@ class Index extends Component {
   };
 
   more = () => {
-    console.log("more");    
+    console.log("more",allproducts);    
     page++;
     this.props.fetchTrakilaProducts(page);
-    products.push(this.props.offerdata)
+    allproducts = allproducts.concat(this.props.offerdata)
 
   }
 
@@ -70,7 +70,7 @@ console.log(this.props)
     return (
         <span>
          <ButtonAppBar/> 
-        <Row products={this.props.offerdata}/>
+        <Row products={allproducts}/>
         <Button raised color="primary" onClick={this.more} >
         More
       </Button>   
