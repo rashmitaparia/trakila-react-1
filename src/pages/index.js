@@ -14,6 +14,7 @@ import ButtonAppBar from '../components/header';
 import Row from '../components/row';
 import { connect } from 'react-redux';
 
+
 import withWidth from 'material-ui/utils/withWidth';
 
 
@@ -29,6 +30,9 @@ const styles = {
    
 };
 
+var page = 1;
+var products = [];
+
 class Index extends Component {
   state = {
     open: false,
@@ -36,7 +40,8 @@ class Index extends Component {
 
   componentDidMount() {
         console.log("this.props",this.props);
-        this.props.fetchTrakilaProducts();
+        this.props.fetchTrakilaProducts(page);
+        products.push(this.props.offerdata)
       }
 
   handleRequestClose = () => {
@@ -44,6 +49,14 @@ class Index extends Component {
       open: false,
     });
   };
+
+  more = () => {
+    console.log("more");    
+    page++;
+    this.props.fetchTrakilaProducts(page);
+    products.push(this.props.offerdata)
+
+  }
 
   handleClick = () => {
     this.setState({
@@ -58,7 +71,10 @@ console.log(this.props)
         <span>
          <ButtonAppBar/> 
         <Row products={this.props.offerdata}/>
-      </span>
+        <Button raised color="primary" onClick={this.more} >
+        More
+      </Button>   
+         </span>
 
     );
   }
@@ -81,7 +97,7 @@ const msp = (state) => {
 
 const mdp = (dispatch) => {
   return {
-    fetchTrakilaProducts: () => dispatch(fetchTrakilaProducts())
+    fetchTrakilaProducts: (page) => dispatch(fetchTrakilaProducts(page))
   };
 };
 

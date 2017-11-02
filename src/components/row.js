@@ -12,6 +12,7 @@ import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
 import Icon from 'material-ui-icons/AddShoppingCart';
 
+import Divider from 'material-ui/Divider';
 
 
 
@@ -26,20 +27,37 @@ const styles = theme => ({
   }),
 
   card: {
-    maxWidth: 300,
-    minWidth: 300,
-    margin: 10,
+    maxWidth: 245,
+    minWidth: 245,
+    maxHeight:350,
+    minHeight:350,
+    
+    margin: 5,
      
   },
+
+  cardcontent:{
+   paddingTop:4,
+   paddingBottom:4,
+   paddingLeft:16,
+   paddingRight:16
+  },
+
   media: {
-    height: 300,
-    width: 300,
+    height: 185,
+    width: 138,
     "margin":"0px auto",
 
   },
+  price:{"color":"#ff0000","fontWeight":"bold","paddingLeft":"20px"},
+  price_difference:{"textDecoration": "line-through"},
+  bordertop:{"borderTop":"1px solid #ccc"},
+  borderleft:{"borderLeft":"1px solid #ccc"},
   // ellipsis:{"fontSize":"14px","fontWeight":"500","marginTop":"15px","whiteSpace":"nowrap","overflow":"hidden","textOverflow":"ellipsis"},
-ellipsis:{"display":"block","textOverflow":"ellipsis","wordWrap":"break-word","fontWeight":"bold","overflow":"hidden","height":"3em","maxHeight":"3em","lineHeight":"1.8em"}
+  ellipsis:{"display":"block","textOverflow":"ellipsis","wordWrap":"break-word","fontWeight":"bold","overflow":"hidden","height":"2em","maxHeight":"2em","lineHeight":"1.5em"}
 });
+
+
 
 
 
@@ -50,14 +68,23 @@ const settings = {
   slidesToShow: 4,
   arrows: true,
   responsive: [{
-    breakpoint: 1024,
+    breakpoint: 1280,
     settings: {
       slidesToShow: 4,
       slidesToScroll: 4,
       infinite: true,
       dots: true
     }
-  }, {
+  }, 
+  {
+    breakpoint: 960,
+    settings: {
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      infinite: true,
+     }
+  },
+  {
     breakpoint: 600,
     settings: {
       slidesToShow: 2,
@@ -94,51 +121,37 @@ export class Row extends React.Component {
   render() {
     return (
 
-      <div>
-        <Paper className={this.props.classes.root} elevation={4}>
-          <Slider {...settings}>
-
+         <Grid container spacing={24}>
           {this.props.products.map(product => (
-
-            <div key={product.prodid}>
-              <Card className={this.props.classes.card}>
-                <CardHeader></CardHeader>
-                <CardMedia
+            <Grid item xs={6} sm={3}>
+               <Card className={this.props.classes.card} key={product.prodid}>
+                 <CardMedia
                   className={this.props.classes.media}
-                  image={"http://dev.trakila.com:8888/unsafe/fit-in/300x300/"+product.image}
+                  image={"http://dev.trakila.com:8888/unsafe/fit-in/185x138/"+product.image}
                   // title={product.item}
                   alt={product.item}
                 />
                 <CardContent  className={this.props.classes.ellipsis}>
-                  <Typography  component="h3">
-                    {/*  {product.item} */}
-
-                  </Typography>
                   {product.item}
                 </CardContent>
-                <CardContent>
-                  Price : {product.price} {product.currency}
-                </CardContent>
-                <CardContent>
-                  Reduced By : {product.price_diff}
-                </CardContent>
-                
-                <CardActions>
-                  <Grid item xs={9}><Button dense color="primary">
-                    Share
-                  </Button></Grid>
-                  <Grid item xs={2}><a color="accent" href={product.url} target="_blank">
-                    <Icon >add_shoppin_cart</Icon>
-                  </a>
-                   </Grid>
-                </CardActions>
-              </Card>
-            </div>
-          ))}
-          </Slider>
-        </Paper>
+                <Divider></Divider>
 
-      </div>
+                <CardContent className={this.props.classes.cardcontent} >
+                <Grid item xs={12}><span className={this.props.classes.price_difference}>{product.price + ~--product.price_diff} </span>
+                <span className={this.props.classes.price}>{product.price}</span></Grid>
+                 <Grid item xs={2} >
+                 <Typography type="subheading" color="secondary">
+                   {product.host}
+                 </Typography>
+                 
+                </Grid>
+             </CardContent>
+              </Card>
+              </Grid>
+           ))}
+           </Grid>
+
+ 
 
     );
   }
